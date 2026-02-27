@@ -183,6 +183,7 @@ describe('Screen1', () => {
       name: /recent activity/i,
     })
     const recentActivitySection = recentActivityHeading.closest('section')
+    expect(recentActivitySection).not.toBeNull()
     const listItems = recentActivitySection!.querySelectorAll('li')
     expect(listItems.length).toBe(4)
   })
