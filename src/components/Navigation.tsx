@@ -19,11 +19,11 @@ const baseLinkClasses =
 
 /** Additional classes applied when a nav link's route is active. */
 const activeLinkClasses =
-  'text-blue-600 font-semibold bg-blue-50 border-b-2 border-blue-600'
+  'text-blue-600 font-semibold bg-blue-50 border-b-2 border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:outline-none'
 
 /** Additional classes applied when a nav link's route is not active. */
 const inactiveLinkClasses =
-  'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+  'text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:outline-none'
 
 /**
  * Returns the composed className string for a NavLink based on its active state.
