@@ -11,7 +11,7 @@ A React + TypeScript single-page application that faithfully reproduces a 3-scre
 | [Vite](https://vite.dev/) | 7.3.1 | Build tool and dev server |
 | [React Router](https://reactrouter.com/) | 7.13.1 | Client-side routing |
 | [Tailwind CSS](https://tailwindcss.com/) | 4.2.1 | Utility-first CSS framework |
-| [ESLint](https://eslint.org/) | 9.28.0 | Code quality linting |
+| [ESLint](https://eslint.org/) | 9.39.3 | Code quality linting |
 
 ## Prerequisites
 
@@ -51,12 +51,12 @@ Before getting started, ensure you have the following installed:
 | Build | `npm run build` | Runs TypeScript type checking and Vite production build |
 | Preview | `npm run preview` | Serves the production build locally for preview |
 | Lint | `npm run lint` | Runs ESLint across the codebase for code quality checks |
+| Test | `npm run test` | Runs unit tests with Vitest |
 
 ## Project Structure
 
 ```
 figma-sandbox/
-├── public/
 ├── src/
 │   ├── assets/          # Static assets (images, icons, SVGs)
 │   ├── components/      # Shared/reusable components
@@ -119,7 +119,7 @@ Navigation between all three screens is available from every page via the shared
 
    Example for common hosts:
 
-   - **Netlify:** Create a `_redirects` file in `public/` with `/* /index.html 200`
+   - **Netlify:** Create a `public/` directory and add a `_redirects` file containing `/* /index.html 200`
    - **Vercel:** Handled automatically for SPAs
    - **Apache:** Configure a `.htaccess` rewrite rule to serve `index.html` for all paths
    - **Nginx:** Add a `try_files $uri $uri/ /index.html` directive
