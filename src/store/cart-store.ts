@@ -200,6 +200,20 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: 'cart-storage',
+      /**
+       * skipHydration prevents the persist middleware from auto-reading
+       * localStorage during SSR (server-side rendering), which avoids
+       * React hydration mismatches in Next.js App Router.
+       *
+       * Consumer components must call `useCartStore.persist.rehydrate()`
+       * inside a client-side `useEffect` to restore persisted state:
+       *
+       * @example
+       * ```tsx
+       * useEffect(() => { useCartStore.persist.rehydrate(); }, []);
+       * ```
+       */
+      skipHydration: true,
     }
   )
 );

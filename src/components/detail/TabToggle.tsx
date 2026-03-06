@@ -42,6 +42,12 @@ export default function TabToggle({
         const isActive = activeTab.toLowerCase() === tab.toLowerCase();
 
         return (
+          /* Tab button:
+           * - Active: bg-tab-active (#323B4F) + shadow-neumorphic-outset (raised)
+           * - Inactive: bg-tab-inactive (#28303F) + shadow-neumorphic-inset (recessed)
+           * - rounded-button: 10px radius from design token
+           * Padding: py-3 px-6 = 12px 24px
+           */
           <button
             key={tab}
             type="button"
@@ -49,47 +55,24 @@ export default function TabToggle({
             aria-selected={isActive}
             aria-controls={`tabpanel-${tab.toLowerCase()}`}
             onClick={() => onTabChange(tab.toLowerCase())}
-            className="flex-1 rounded-[10px] cursor-pointer border-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3CA4EB] motion-safe:transition-[background-color,box-shadow] motion-safe:duration-200 motion-safe:ease-out"
-            style={{
-              /* ---- Background ---- */
-              backgroundColor: isActive ? '#323B4F' : '#28303F',
-
-              /* ---- Neumorphic shadow ---- */
-              boxShadow: isActive
-                ? '4px 4px 10px rgba(37,43,57,1), -4px -4px 10px rgba(56,68,90,1)'
-                : 'inset 4px 4px 8px rgba(32,38,51,1), inset -4px -4px 8px rgba(54,64,85,1)',
-
-              /* ---- Padding ---- */
-              padding: '12px 24px',
-            }}
+            className={`flex-1 rounded-button cursor-pointer border-none py-3 px-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3CA4EB] motion-safe:transition-[background-color,box-shadow] motion-safe:duration-200 motion-safe:ease-out ${
+              isActive
+                ? 'bg-tab-active shadow-neumorphic-outset'
+                : 'bg-tab-inactive shadow-neumorphic-inset'
+            }`}
           >
-            {/* Text span — gradient for active, flat color for inactive */}
+            {/* Text span — gradient for active, flat color for inactive
+             * Active: text-gradient-tab applies background-clip:text technique
+             *   with var(--gradient-tab-text) = linear-gradient(90deg, #3CA4EB → #4286EE)
+             * Inactive: text-text-muted = rgba(255,255,255,0.6)
+             * Typography: 15px, -2% letter-spacing, 1.5em line-height
+             */}
             <span
-              style={
+              className={`text-[15px] leading-[1.5em] tracking-[-0.02em] ${
                 isActive
-                  ? {
-                      /* PRIMARY visual indicator: gradient text */
-                      background:
-                        'linear-gradient(90deg, #3CA4EB 0%, #4286EE 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      /* Typography: Poppins 700 15px */
-                      fontSize: '15px',
-                      fontWeight: 700,
-                      lineHeight: '1.5em',
-                      letterSpacing: '-0.02em',
-                    }
-                  : {
-                      /* Flat muted white for inactive */
-                      color: 'rgba(255, 255, 255, 0.6)',
-                      /* Typography: Poppins 400 15px */
-                      fontSize: '15px',
-                      fontWeight: 400,
-                      lineHeight: '1.5em',
-                      letterSpacing: '-0.02em',
-                    }
-              }
+                  ? 'font-bold text-gradient-tab'
+                  : 'font-normal text-text-muted'
+              }`}
             >
               {tab}
             </span>

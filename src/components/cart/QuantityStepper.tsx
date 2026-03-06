@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 /**
@@ -35,19 +37,14 @@ const QuantityStepper: React.FC<QuantityStepperProps> = ({
 }) => {
   return (
     <div
-      className="flex items-center w-[79px] h-[30px] rounded-[8px] overflow-hidden"
-      style={{
-        boxShadow:
-          'inset 2px 2px 4px rgba(30,37,49,1), inset -2px -2px 4px rgba(39,48,65,1)',
-      }}
+      className="flex items-center w-[79px] h-[30px] rounded-input overflow-hidden shadow-stepper-inset"
     >
       {/* Minus / Decrement Button — dark background, no gradient */}
       <button
         type="button"
         onClick={onDecrement}
-        className="flex items-center justify-center flex-1 h-full text-white/60 transition-colors"
+        className="flex items-center justify-center flex-1 h-full text-white/60 transition-colors bg-transparent"
         aria-label="Decrease quantity"
-        style={{ background: 'transparent' }}
       >
         <svg
           viewBox="0 0 24 24"
@@ -65,14 +62,7 @@ const QuantityStepper: React.FC<QuantityStepperProps> = ({
 
       {/* Quantity Count Display */}
       <span
-        className="text-white text-center select-none"
-        style={{
-          fontWeight: 600,
-          fontSize: '13px',
-          lineHeight: '1.5em',
-          letterSpacing: '-0.023em',
-          minWidth: '24px',
-        }}
+        className="text-white text-center select-none font-semibold text-[13px] leading-[1.5em] tracking-[-0.023em] min-w-[24px]"
       >
         {value}
       </span>
@@ -81,11 +71,8 @@ const QuantityStepper: React.FC<QuantityStepperProps> = ({
       <button
         type="button"
         onClick={onIncrement}
-        className="flex items-center justify-center flex-1 h-full text-white transition-colors"
+        className="flex items-center justify-center flex-1 h-full text-white transition-colors bg-gradient-primary"
         aria-label="Increase quantity"
-        style={{
-          background: 'linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)',
-        }}
       >
         <svg
           viewBox="0 0 24 24"

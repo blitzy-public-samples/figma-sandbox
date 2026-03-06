@@ -44,10 +44,34 @@ export default function CheckoutSlider({ onCheckout }: CheckoutSliderProps) {
    */
   const dragOffsetRef = useRef(0);
 
-  /** Keep ref in sync with state */
+  /**
+   * Ref stores references to active window-level listeners so they can be
+   * cleaned up on component unmount — prevents listener leaks if the user
+   * navigates away mid-drag.
+   */
+  const activeListenersRef = useRef<{
+    mousemove?: (e: MouseEvent) => void;
+    mouseup?: () => void;
+    touchmove?: (e: TouchEvent) => void;
+    touchend?: () => void;
+  }>({});
+
+  /** Keep dragOffset ref in sync with state */
   useEffect(() => {
     dragOffsetRef.current = dragOffset;
   }, [dragOffset]);
+
+  /** Cleanup: remove any active window listeners on component unmount */
+  useEffect(() => {
+    const listenersRef = activeListenersRef;
+    return () => {
+      const listeners = listenersRef.current;
+      if (listeners.mousemove) window.removeEventListener('mousemove', listeners.mousemove);
+      if (listeners.mouseup) window.removeEventListener('mouseup', listeners.mouseup);
+      if (listeners.touchmove) window.removeEventListener('touchmove', listeners.touchmove);
+      if (listeners.touchend) window.removeEventListener('touchend', listeners.touchend);
+    };
+  }, []);
 
   /**
    * Computed left-position of the handle.
@@ -83,7 +107,13 @@ export default function CheckoutSlider({ onCheckout }: CheckoutSliderProps) {
         dragOffsetRef.current = 0;
         window.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('mouseup', onMouseUp);
+        activeListenersRef.current.mousemove = undefined;
+        activeListenersRef.current.mouseup = undefined;
       };
+
+      /* Store listener references for unmount cleanup */
+      activeListenersRef.current.mousemove = onMouseMove;
+      activeListenersRef.current.mouseup = onMouseUp;
 
       window.addEventListener('mousemove', onMouseMove);
       window.addEventListener('mouseup', onMouseUp);
@@ -118,7 +148,13 @@ export default function CheckoutSlider({ onCheckout }: CheckoutSliderProps) {
         dragOffsetRef.current = 0;
         window.removeEventListener('touchmove', onTouchMove);
         window.removeEventListener('touchend', onTouchEnd);
+        activeListenersRef.current.touchmove = undefined;
+        activeListenersRef.current.touchend = undefined;
       };
+
+      /* Store listener references for unmount cleanup */
+      activeListenersRef.current.touchmove = onTouchMove;
+      activeListenersRef.current.touchend = onTouchEnd;
 
       window.addEventListener('touchmove', onTouchMove, { passive: true });
       window.addEventListener('touchend', onTouchEnd);
@@ -140,11 +176,7 @@ export default function CheckoutSlider({ onCheckout }: CheckoutSliderProps) {
   return (
     <div
       ref={trackRef}
-      className="relative w-[174px] h-[44px] rounded-[10px] flex items-center overflow-hidden mx-auto"
-      style={{
-        boxShadow:
-          'inset 4px 4px 30px rgba(17,22,30,1), inset -2px -2px 8px rgba(43,53,69,1)',
-      }}
+      className="relative w-[174px] h-[44px] rounded-button flex items-center overflow-hidden mx-auto shadow-checkout-inset"
       role="slider"
       aria-label="Slide to checkout"
       aria-valuemin={0}
@@ -155,17 +187,15 @@ export default function CheckoutSlider({ onCheckout }: CheckoutSliderProps) {
     >
       {/* ── "Checkout" label centred in the track ── */}
       <span
-        className="absolute inset-0 flex items-center justify-center font-medium text-[15px] leading-[1.5em] tracking-[-0.02em] pointer-events-none select-none"
-        style={{ color: 'rgba(255,255,255,0.6)' }}
+        className="absolute inset-0 flex items-center justify-center font-medium text-[15px] leading-[1.5em] tracking-[-0.02em] pointer-events-none select-none text-text-muted"
       >
         Checkout
       </span>
 
       {/* ── Draggable gradient handle ── */}
       <div
-        className="absolute top-0 w-[44px] h-[44px] rounded-[10px] flex items-center justify-center text-white cursor-grab active:cursor-grabbing z-10 touch-none"
+        className="absolute top-0 w-[44px] h-[44px] rounded-button flex items-center justify-center text-white cursor-grab active:cursor-grabbing z-10 touch-none bg-gradient-primary"
         style={{
-          background: 'linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)',
           left: `${handlePosition}px`,
           /* Spring-back: animate only when not actively dragging */
           transition: isDragging ? 'none' : 'left 0.3s ease-out',

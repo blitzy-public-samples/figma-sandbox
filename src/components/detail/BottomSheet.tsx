@@ -47,32 +47,18 @@ export interface BottomSheetProps {
  */
 export default function BottomSheet({ children }: BottomSheetProps) {
   return (
+    /* Sheet container:
+     * - bg-gradient-sheet: linear-gradient(145deg, #353F54 0%, #222834 61%)
+     * - shadow-sheet: 0px -20px 60px rgba(0,0,0,0.25) upward shadow
+     * - gradient-stroke-sheet: 2px top-edge stroke via ::before pseudo-element
+     *   using var(--stroke-sheet-top) = linear-gradient(181deg, #FFF 0%, transparent 14%)
+     *   Full-opacity #FFF per AAP Token Manifest (AAP Rule #1)
+     *   Pseudo-element technique per AAP Rule #2
+     * - rounded-t-[30px]: 30px radius on top corners only (radius-sheet)
+     */
     <section
-      className="relative w-full h-[450px] rounded-t-[30px] pt-6 overflow-hidden"
-      style={{
-        background: 'linear-gradient(145deg, #353F54 0%, #222834 61%)',
-        boxShadow: '0px -20px 60px rgba(0, 0, 0, 0.25)',
-      }}
+      className="relative w-full h-[450px] rounded-t-[30px] pt-6 overflow-hidden bg-gradient-sheet shadow-sheet gradient-stroke-sheet"
     >
-      {/* ── Top-edge gradient stroke highlight ────────────────────
-       * Implements stroke-sheet-top:
-       *   linear-gradient(181deg, #FFF 0%, transparent 14%) at 2px height.
-       *
-       * Direction 181deg is nearly straight down, so the white highlight
-       * appears only at the very top edge and fades within the first 14%
-       * of the stroke height. Since CSS border-image does not work with
-       * border-radius, this is implemented as an absolutely positioned
-       * overlay div.
-       */}
-      <div
-        aria-hidden="true"
-        className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
-        style={{
-          background:
-            'linear-gradient(181deg, rgba(255, 255, 255, 0.5) 0%, transparent 14%)',
-        }}
-      />
-
       {/* ── Sheet content ────────────────────────────────────────── */}
       <div className="flex flex-col gap-5">
         {children}

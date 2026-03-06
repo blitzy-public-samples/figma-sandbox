@@ -65,20 +65,14 @@
 
 /* ================================================================
    GLOBAL BASE STYLES
-   Reset, font defaults, scrollbar hiding for mobile UI
+   Font smoothing and scrollbar hiding for mobile UI.
+   Note: Box-sizing, margin, and padding resets are handled by
+   Tailwind CSS v4's built-in preflight. Font-family is applied via
+   layout.tsx className injection using next/font/google.
    ================================================================ */
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
 html,
 body {
-  font-family: var(--font-poppins), 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

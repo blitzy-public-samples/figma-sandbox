@@ -50,48 +50,19 @@ export default function TopCard({
     /* Outer wrapper — positions the card with 20px horizontal margin (mx-auto
        centers the 350px card within the 390px device frame, creating 20px
        margin on each side matching the space-page-x token). */
-    <div className="relative mx-auto" style={{ width: 350, height: 240 }}>
-      {/*
-        Gradient stroke layer — creates a 2px gradient border effect.
-        Uses absolute positioning with inset: -2px to extend 2px beyond
-        the card on all sides. Border-radius is 22px (20px card + 2px stroke)
-        to maintain smooth corners aligned with the inner card.
-
-        BLITZY [LAYOUT]: Gradient stroke via wrapper div — CSS border-image
-        is incompatible with border-radius. Using absolute-positioned div
-        with gradient background as the stroke layer.
-
-        Gradient: linear-gradient(115deg, #FFF 8%, #000 77%)
-        This creates a visible bright edge at top-left that fades to dark
-        at bottom-right, matching the neumorphic depth illusion.
-      */}
-      <div
-        className="absolute inset-[-2px] rounded-[22px]"
-        style={{
-          background: 'linear-gradient(115deg, #FFF 8%, #000 77%)',
-        }}
-        aria-hidden="true"
-      />
-
+    <div className="relative mx-auto w-[350px] h-[240px]">
       {/*
         Card body — the main visible card surface.
-        - z-10 ensures it sits above the gradient stroke layer
-        - Gradient fill: 159deg from #353F54 (27%) to #222834 (85%)
-        - Backdrop blur: 100px for frosted glass depth against background
-        - WebkitBackdropFilter: Safari compatibility for backdrop-filter
-        - Dual box-shadow: downward dark shadow + upward blue-tinted ambient glow
+        - bg-gradient-card-dark: gradient fill 159deg from #353F54 to #222834
+        - blur-topcard: backdrop-filter blur(100px) with -webkit prefix
+        - shadow-card: dual neumorphic box-shadow
+        - gradient-stroke-card: 2px gradient stroke via ::before pseudo-element
+          using mask-composite technique (per AAP Rule #2)
+        - rounded-card: 20px border-radius from design token
         - overflow-hidden clips the product image to the card boundaries
-        - rounded-[20px] matches the radius-card design token
       */}
       <div
-        className="relative z-10 w-full h-full rounded-[20px] overflow-hidden"
-        style={{
-          background: 'linear-gradient(159deg, #353F54 27%, #222834 85%)',
-          backdropFilter: 'blur(100px)',
-          WebkitBackdropFilter: 'blur(100px)',
-          boxShadow:
-            '0px 20px 60px rgba(16, 20, 28, 1), 0px -20px 40px rgba(43, 52, 69, 0.5)',
-        }}
+        className="relative w-full h-full rounded-card overflow-hidden bg-gradient-card-dark blur-topcard shadow-card gradient-stroke-card"
       >
         {/*
           Card content container — uses relative positioning to stack the
@@ -150,14 +121,7 @@ export default function TopCard({
             z-10 ensures text sits above the image layer.
           */}
           <p
-            className="absolute bottom-[20px] left-[20px] z-10 m-0 p-0"
-            style={{
-              fontSize: '26px',
-              fontWeight: 700,
-              lineHeight: '1.5em',
-              color: 'rgba(255, 255, 255, 0.6)',
-              letterSpacing: '0',
-            }}
+            className="absolute bottom-[20px] left-[20px] z-10 m-0 p-0 text-[26px] font-bold leading-[1.5em] tracking-normal text-text-muted"
           >
             {discount}
           </p>

@@ -51,11 +51,7 @@ export interface ProductImageHeroProps {
 export default function ProductImageHero({ image, name }: ProductImageHeroProps) {
   return (
     <div
-      className="relative w-full flex items-center justify-center overflow-hidden"
-      style={{
-        height: '394px',
-        backgroundColor: '#242C3B',
-      }}
+      className="relative w-full h-[394px] flex items-center justify-center overflow-hidden bg-bg-primary"
     >
       {/* ── Diagonal blue gradient overlay ──────────────────────────
        * Implements gradient-blue-overlay at reduced opacity (~30%):

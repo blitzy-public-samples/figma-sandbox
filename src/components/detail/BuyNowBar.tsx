@@ -68,72 +68,37 @@ function formatPrice(value: number): string {
  */
 export default function BuyNowBar({ price, onAddToCart }: BuyNowBarProps) {
   return (
+    /* Bar container:
+     * - bg-surface-sheet: #262E3D fill
+     * - rounded-device: 50px pill radius
+     * - shadow-buynow: 0px -10px 40px rgba(28,34,46,1) upward shadow
+     * - gradient-stroke-buynow: 2px stroke via ::before pseudo-element
+     *   using var(--stroke-buynow) = linear-gradient(180deg, #FFF 0%, #000 69%)
+     *   with mask-composite technique (AAP Rule #2)
+     */
     <div
-      className="relative w-full h-[104px] rounded-[50px] flex items-center justify-between px-5 z-30"
-      style={{
-        background: '#262E3D',
-        boxShadow: '0px -10px 40px rgba(28, 34, 46, 1)',
-      }}
+      className="relative w-full h-[104px] rounded-device flex items-center justify-between px-5 z-30 bg-surface-sheet shadow-buynow gradient-stroke-buynow"
     >
-      {/* ── Gradient stroke overlay (bar container) ──────────────── */}
-      {/*
-       * Implements stroke-buynow:
-       *   linear-gradient(180deg, #FFF 0%, #000 69%) at 2 px width.
-       * Uses the mask-composite technique so the gradient stroke
-       * follows the pill-shaped 50 px border-radius.
-       */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 rounded-[50px] pointer-events-none"
-        style={{
-          padding: '2px',
-          background:
-            'linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.2) 69%)',
-          WebkitMask:
-            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          mask:
-            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          maskComposite: 'exclude',
-        }}
-      />
-
       {/* ── Price display (left side) ────────────────────────────── */}
       <span
-        className="relative z-10 text-[24px] font-normal leading-[1.5em] tracking-[-0.0125em]"
-        style={{ color: '#3D9CEA' }}
+        className="relative z-10 text-[24px] font-normal leading-[1.5em] tracking-[-0.0125em] text-accent-blue-1"
       >
         {formatPrice(price)}
       </span>
 
       {/* ── "Add to Cart" button (right side) ────────────────────── */}
+      {/*
+       * - bg-gradient-primary: linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)
+       * - shadow-cta: 0px 30px 60px rgba(26,31,44,1)
+       * - gradient-stroke-button: 1px stroke via ::before pseudo-element
+       *   using var(--stroke-button) = linear-gradient(135deg, #FFF 0%, #000 100%)
+       * - rounded-button: 10px radius
+       */}
       <button
         type="button"
         onClick={onAddToCart}
-        className="relative z-10 w-[160px] h-[44px] rounded-[10px] text-[15px] font-medium leading-[1.5em] tracking-[-0.02em] text-white cursor-pointer"
-        style={{
-          background: 'linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)',
-          boxShadow: '0px 30px 60px rgba(26, 31, 44, 1)',
-        }}
+        className="relative z-10 w-[160px] h-[44px] rounded-button text-[15px] font-medium leading-[1.5em] tracking-[-0.02em] text-white cursor-pointer bg-gradient-primary shadow-cta gradient-stroke-button"
       >
-        {/* Gradient stroke overlay (button) —
-         * stroke-button: linear-gradient(135deg, #FFF 0%, #000 100%) 2 px
-         */}
-        <span
-          aria-hidden="true"
-          className="absolute inset-0 rounded-[10px] pointer-events-none"
-          style={{
-            padding: '2px',
-            background:
-              'linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 0, 0.25) 100%)',
-            WebkitMask:
-              'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            WebkitMaskComposite: 'xor',
-            mask:
-              'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            maskComposite: 'exclude',
-          }}
-        />
         Add to Cart
       </button>
     </div>
