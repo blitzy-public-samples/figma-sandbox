@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bicycle icon - "All" category -->
+  <!-- Front wheel -->
+  <circle cx="6.5" cy="17" r="3.5"/>
+  <!-- Rear wheel -->
+  <circle cx="17.5" cy="17" r="3.5"/>
+  <!-- Frame -->
+  <polyline points="6.5,17 10,9 17.5,17"/>
+  <line x1="10" y1="9" x2="15" y2="9"/>
+  <line x1="15" y1="9" x2="17.5" y2="17"/>
+  <!-- Handlebar -->
+  <line x1="15" y1="9" x2="17" y2="7"/>
+  <!-- Seat -->
+  <line x1="9" y1="8" x2="11" y2="8"/>
+  <line x1="10" y1="9" x2="10" y2="8"/>
+</svg>
