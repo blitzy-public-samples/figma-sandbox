@@ -85,6 +85,8 @@ export default function ProductImageHero({ image, name }: ProductImageHeroProps)
         className="object-contain relative z-10"
         style={{ width: '288px', height: '222px' }}
         priority
+        fetchPriority="high"
+        loading="eager"
       />
     </div>
   );

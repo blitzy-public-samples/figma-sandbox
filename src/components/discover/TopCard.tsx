@@ -104,6 +104,8 @@ export default function TopCard({
               style={{ objectPosition: '50% 55%' }}
               sizes="350px"
               priority
+              fetchPriority="high"
+              loading="eager"
             />
           </div>
 
