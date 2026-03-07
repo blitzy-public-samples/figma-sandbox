@@ -1,0 +1,304 @@
+@import "tailwindcss";
+
+/* ================================================================
+   TAILWIND CSS v4 — CUSTOM DESIGN TOKENS
+   Online Bike Shopping App Design System
+   All tokens from AAP Section 0.5.2 Token Manifest (CONFIRMED)
+   ================================================================ */
+
+@theme {
+  /* ============================
+     FONT FAMILY
+     ============================ */
+  --font-poppins: 'Poppins', sans-serif;
+
+  /* ============================
+     COLOR TOKENS
+     ============================ */
+  --color-bg-primary: #242C3B;
+  --color-text-white: #FFFFFF;
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-text-semi: rgba(255, 255, 255, 0.87);
+  --color-accent-blue-1: #3D9CEA;
+  --color-accent-blue-2: #3C9EEA;
+  --color-accent-blue-3: #38B8EA;
+  --color-surface-sheet: #262E3D;
+  --color-tab-active: #323B4F;
+  --color-tab-inactive: #28303F;
+  --color-separator: rgba(255, 255, 255, 0.5);
+
+  /* ============================
+     BORDER RADIUS TOKENS
+     ============================ */
+  --radius-device: 50px;
+  --radius-sheet: 30px;
+  --radius-card: 20px;
+  --radius-button: 10px;
+  --radius-input: 8px;
+}
+
+/* ================================================================
+   CSS CUSTOM PROPERTIES — GRADIENT DEFINITIONS
+   Complex gradient values stored on :root (not inside @theme)
+   ================================================================ */
+
+:root {
+  /* ============================
+     GRADIENT FILLS (from Token Manifest)
+     ============================ */
+  --gradient-primary-button: linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%);
+  --gradient-card-dark: linear-gradient(159deg, #353F54 27%, #222834 85%);
+  --gradient-card-darker: linear-gradient(154deg, #363E51 26%, #191E26 72%);
+  --gradient-sheet: linear-gradient(145deg, #353F54 0%, #222834 61%);
+  --gradient-tab-text: linear-gradient(90deg, #3CA4EB 0%, #4286EE 100%);
+  --gradient-blue-overlay: linear-gradient(150deg, #37B6E9 1%, #4B4CED 91%);
+
+  /* ============================
+     GRADIENT STROKE DEFINITIONS
+     ============================ */
+  --stroke-button: linear-gradient(135deg, #FFF 0%, #000 100%);
+  --stroke-card-bold: linear-gradient(115deg, #FFF 8%, #000 77%);
+  --stroke-category: linear-gradient(108deg, #FFF 8%, #000 82%);
+  --stroke-sheet-top: linear-gradient(181deg, #FFF 0%, transparent 14%);
+  --stroke-buynow: linear-gradient(180deg, #FFF 0%, #000 69%);
+}
+
+/* ================================================================
+   GLOBAL BASE STYLES
+   Font smoothing and scrollbar hiding for mobile UI.
+   Note: Box-sizing, margin, and padding resets are handled by
+   Tailwind CSS v4's built-in preflight. Font-family is applied via
+   layout.tsx className injection using next/font/google.
+   ================================================================ */
+
+html,
+body {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbars globally — mobile app interface */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ================================================================
+   SHADOW UTILITIES (@utility)
+   All shadow tokens from AAP Section 0.5.2 — CONFIRMED values
+   ================================================================ */
+
+@utility shadow-screen {
+  box-shadow: 0px 30px 100px rgba(82, 108, 143, 1);
+}
+
+@utility shadow-button {
+  box-shadow: 0px 20px 30px rgba(16, 20, 28, 1), 0px -20px 30px rgba(43, 52, 69, 0.5);
+}
+
+@utility shadow-card {
+  box-shadow: 0px 20px 60px rgba(16, 20, 28, 1), 0px -20px 40px rgba(43, 52, 69, 0.5);
+}
+
+@utility shadow-sheet {
+  box-shadow: 0px -20px 60px rgba(0, 0, 0, 0.25);
+}
+
+@utility shadow-buynow {
+  box-shadow: 0px -10px 40px rgba(28, 34, 46, 1);
+}
+
+@utility shadow-cta {
+  box-shadow: 0px 30px 60px rgba(26, 31, 44, 1);
+}
+
+@utility shadow-neumorphic-outset {
+  box-shadow: 4px 4px 10px rgba(37, 43, 57, 1), -4px -4px 10px rgba(56, 68, 90, 1);
+}
+
+@utility shadow-neumorphic-inset {
+  box-shadow: inset 4px 4px 8px rgba(32, 38, 51, 1), inset -4px -4px 8px rgba(54, 64, 85, 1);
+}
+
+@utility shadow-stepper-inset {
+  box-shadow: inset 2px 2px 4px rgba(30, 37, 49, 1), inset -2px -2px 4px rgba(39, 48, 65, 1);
+}
+
+@utility shadow-coupon-inset {
+  box-shadow: inset 4px 10px 30px rgba(25, 30, 41, 1);
+}
+
+@utility shadow-checkout-inset {
+  box-shadow: inset 4px 4px 30px rgba(17, 22, 30, 1), inset -2px -2px 8px rgba(43, 53, 69, 1);
+}
+
+/* ================================================================
+   GRADIENT STROKE UTILITIES (@utility)
+   Pseudo-element technique for gradient borders with border-radius
+   CSS border-image does NOT work with border-radius — this uses
+   mask-composite to create hollow gradient strokes.
+   ================================================================ */
+
+@utility gradient-stroke-button {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--stroke-button);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* 2px variant of gradient-stroke-button for the "Add to Cart" button on the
+   Detail page BuyNowBar. The Figma reconciled spec calls for a 2px stroke
+   width on this specific button (vs the standard 1px used by BackButton and
+   other gradient buttons). Same gradient direction and color stops as
+   stroke-button (135deg, #FFF 0% → #000 100%). */
+@utility gradient-stroke-button-bold {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: var(--stroke-button);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@utility gradient-stroke-card {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: var(--stroke-card-bold);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@utility gradient-stroke-category {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--stroke-category);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@utility gradient-stroke-sheet {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: var(--stroke-sheet-top);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@utility gradient-stroke-buynow {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: var(--stroke-buynow);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* ================================================================
+   GRADIENT FILL UTILITIES (@utility)
+   Background gradient fills for cards, buttons, overlays, and text
+   ================================================================ */
+
+@utility bg-gradient-primary {
+  background: var(--gradient-primary-button);
+}
+
+@utility bg-gradient-card-dark {
+  background: var(--gradient-card-dark);
+}
+
+@utility bg-gradient-card-darker {
+  background: var(--gradient-card-darker);
+}
+
+@utility bg-gradient-sheet {
+  background: var(--gradient-sheet);
+}
+
+@utility bg-gradient-blue-overlay {
+  background: var(--gradient-blue-overlay);
+}
+
+@utility text-gradient-tab {
+  background: var(--gradient-tab-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================================================================
+   BACKDROP BLUR UTILITIES (@utility)
+   Safari compatibility via -webkit-backdrop-filter prefix
+   ================================================================ */
+
+@utility blur-category {
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+}
+
+@utility blur-card {
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+}
+
+@utility blur-topcard {
+  -webkit-backdrop-filter: blur(100px);
+  backdrop-filter: blur(100px);
+}
