@@ -26,13 +26,23 @@ import { useCartStore } from '@/store/cart-store';
  * - Layout: flex row, justify-between, items-center, mx-5 (20px side padding)
  */
 export default function TotalDisplay(): React.JSX.Element {
-  const getTotal = useCartStore((state) => state.getTotal);
+  /**
+   * Select the COMPUTED total value (number) from the Zustand cart store.
+   *
+   * CRITICAL: The selector calls `state.getTotal()` — invoking the getter
+   * function inside the selector — so that Zustand receives the numeric
+   * result and can detect changes via `Object.is()` comparison. Selecting
+   * the function reference (`state.getTotal`) instead would return a stable
+   * identity that never changes, preventing re-renders when only the coupon
+   * or discount state changes (without an accompanying `items` mutation).
+   */
+  const totalValue = useCartStore((state) => state.getTotal());
 
   /**
    * Format the computed total as a USD string with commas and 2 decimals.
-   * Example: 4283.993 → "4,283.99"
+   * Example: 4283.99 → "4,283.99"
    */
-  const formattedTotal = getTotal().toLocaleString('en-US', {
+  const formattedTotal = totalValue.toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });

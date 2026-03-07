@@ -170,10 +170,14 @@ export const useCartStore = create<CartState>()(
         if (items.length === 0) {
           return 0;
         }
-        return items.reduce(
-          (sum, item) => sum + item.product.price * item.quantity,
+        const sum = items.reduce(
+          (acc, item) => acc + item.product.price * item.quantity,
           0
         );
+        // Round to 2 decimal places to prevent IEEE 754 floating-point
+        // precision drift when summing monetary values (e.g., $1999.99 +
+        // $3999.99 + $120 should yield exactly $6119.98, not 6119.9799…)
+        return Math.round(sum * 100) / 100;
       },
 
       getDeliveryFee: (): number => {
