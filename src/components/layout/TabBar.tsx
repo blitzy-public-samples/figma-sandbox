@@ -256,15 +256,14 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
         const IconComponent = tab.icon;
         const isCartTab = index === 2;
 
-        const tabContent = (
-          <button
-            type="button"
-            className="relative flex flex-col items-center justify-center"
-            style={{ width: '44px', height: '44px', cursor: 'pointer' }}
-            onClick={() => onTabChange?.(index)}
-            aria-label={tab.name}
-            aria-current={isActive ? 'page' : undefined}
-          >
+        /**
+         * Shared inner content for both linked and non-linked tabs.
+         * Contains the gradient background (active state), icon, and
+         * optional cart badge. This is NOT a focusable element — the
+         * outer Link or button handles focus and interaction.
+         */
+        const tabInner = (
+          <>
             {/* Active tab: gradient background square */}
             {isActive && (
               <span
@@ -313,30 +312,45 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
                 {cartCount > 9 ? '9+' : cartCount}
               </span>
             )}
-          </button>
+          </>
         );
 
-        /* Wrap functional routes in Link; placeholder routes remain as-is */
+        /* Functional routes (Home, Cart): use a single <Link> element —
+         * no nested <button> to avoid duplicate focusable elements.
+         * The <Link> renders as <a>, which is the sole tab stop. */
         if (tab.href !== '#') {
           return (
             <Link
               key={tab.name}
               href={tab.href}
-              className="flex items-center justify-center"
-              style={{ textDecoration: 'none' }}
-              aria-label={`Navigate to ${tab.name}`}
+              className="relative flex flex-col items-center justify-center"
+              style={{ width: '44px', height: '44px', cursor: 'pointer', textDecoration: 'none' }}
+              aria-label={tab.name}
+              aria-current={isActive ? 'page' : undefined}
+              onClick={() => onTabChange?.(index)}
             >
-              {tabContent}
+              {tabInner}
             </Link>
           );
         }
 
+        /* Placeholder routes (Map, Profile, Bookmark): use a single <button>
+         * wrapped in a non-focusable <div> — one tab stop per item. */
         return (
           <div
             key={tab.name}
             className="flex items-center justify-center"
           >
-            {tabContent}
+            <button
+              type="button"
+              className="relative flex flex-col items-center justify-center"
+              style={{ width: '44px', height: '44px', cursor: 'pointer' }}
+              onClick={() => onTabChange?.(index)}
+              aria-label={tab.name}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {tabInner}
+            </button>
           </div>
         );
       })}

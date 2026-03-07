@@ -177,7 +177,8 @@ export default function CategoryItem({
         'rounded-[10px]',
         'flex items-center justify-center',
         'cursor-pointer',
-        'outline-none',
+        /* Accessible focus indicator — visible ring on keyboard navigation */
+        'focus-visible:ring-2 focus-visible:ring-[#34C8E8] focus-visible:outline-none',
         /* Active state: gradient fill, white icon, no stroke */
         isActive && 'bg-gradient-primary text-white',
         /* Inactive state: dark fill, gradient stroke, muted icon, blur */

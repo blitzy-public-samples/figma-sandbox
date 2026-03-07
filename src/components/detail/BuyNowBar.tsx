@@ -34,16 +34,19 @@ export interface BuyNowBarProps {
 /**
  * Formats a numeric price into the display string shown in the Figma design.
  *
- * Examples:
+ * Handles both decimal prices and whole numbers to match Figma text exactly:
  *   1999.99  → "$ 1,999.99"
  *   3999.99  → "$ 3,999.99"
- *   120      → "$ 120.00"
+ *   120      → "$ 120"       (no trailing zeros for whole numbers)
+ *
+ * Uses string manipulation for deterministic SSR/client output consistency,
+ * matching the same formatting logic used in ProductCard.tsx.
  */
 function formatPrice(value: number): string {
-  return `$ ${value.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+  const parts = value.toString().split('.');
+  const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const decimalPart = parts[1] ? `.${parts[1]}` : '';
+  return `$ ${integerPart}${decimalPart}`;
 }
 
 /* ------------------------------------------------------------------ */

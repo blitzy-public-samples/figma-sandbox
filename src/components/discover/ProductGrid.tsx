@@ -48,9 +48,17 @@ interface ProductGridProps {
  * @returns JSX element representing the masonry grid, or null if empty
  */
 export default function ProductGrid({ products }: ProductGridProps) {
-  /* Empty state: no UI designed in Figma for zero products */
+  /* Empty state: show a user-friendly message when no products match the
+     active category filter. Styled to match the dark theme with muted text
+     (Poppins 400 15px rgba(255,255,255,0.6)) and centered within the grid area. */
   if (products.length === 0) {
-    return null;
+    return (
+      <div className="flex items-center justify-center px-5 py-12">
+        <p className="text-[15px] font-normal leading-[1.5em] tracking-[-0.02em] text-white/60 text-center">
+          No products found in this category.
+        </p>
+      </div>
+    );
   }
 
   /* Split products into two columns by index parity.
