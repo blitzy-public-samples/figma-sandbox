@@ -66,7 +66,7 @@ function formatPrice(value: number): string {
  *   - Button bg     : linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%) (gradient-primary-button)
  *   - Button radius : 10px     (radius-button)
  *   - Button shadow : 0px 30px 60px rgba(26,31,44,1)  (shadow-cta)
- *   - Button stroke : linear-gradient(135deg, #FFF 0%, #000 100%) 1px (stroke-button — kept as 2px per reconciled spec)
+ *   - Button stroke : linear-gradient(135deg, #FFF 0%, #000 100%) 2px (stroke-button via gradient-stroke-button-bold)
  *   - Button font   : Poppins 500 15px / 1.5em / ls -2% / #FFFFFF
  */
 export default function BuyNowBar({ price, onAddToCart }: BuyNowBarProps) {
@@ -93,14 +93,14 @@ export default function BuyNowBar({ price, onAddToCart }: BuyNowBarProps) {
       {/*
        * - bg-gradient-primary: linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)
        * - shadow-cta: 0px 30px 60px rgba(26,31,44,1)
-       * - gradient-stroke-button: 1px stroke via ::before pseudo-element
+       * - gradient-stroke-button-bold: 2px stroke via ::before pseudo-element
        *   using var(--stroke-button) = linear-gradient(135deg, #FFF 0%, #000 100%)
        * - rounded-button: 10px radius
        */}
       <button
         type="button"
         onClick={onAddToCart}
-        className="relative z-10 w-[160px] h-[44px] rounded-button text-[15px] font-medium leading-[1.5em] tracking-[-0.02em] text-white cursor-pointer bg-gradient-primary shadow-cta gradient-stroke-button"
+        className="relative z-10 w-[160px] h-[44px] rounded-button text-[15px] font-medium leading-[1.5em] tracking-[-0.02em] text-white cursor-pointer bg-gradient-primary shadow-cta gradient-stroke-button-bold"
       >
         Add to Cart
       </button>

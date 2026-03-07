@@ -71,9 +71,11 @@ export default function ProductGrid({ products }: ProductGridProps) {
   const rightColumn = products.filter((_, index) => index % 2 !== 0);
 
   return (
-    <div className="flex gap-[14px] px-5">
-      {/* Left column — starts at natural Y position (no offset) */}
-      <div className="flex flex-1 flex-col gap-[14px]">
+    <div className="flex gap-[14px] px-5 justify-center">
+      {/* Left column — explicit 165px width per Figma spec (node 1:71).
+          flex-1 previously produced ~168px from (350−14)/2; the fixed width
+          ensures pixel-perfect 165px card width matching the Figma design. */}
+      <div className="flex w-[165px] flex-col gap-[14px]">
         {leftColumn.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
@@ -82,7 +84,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
       {/* Right column — 20px top padding creates the masonry stagger offset.
           This makes the right column start lower than the left, producing
           the Pinterest/masonry visual effect from the Figma design. */}
-      <div className="flex flex-1 flex-col gap-[14px] pt-[20px]">
+      <div className="flex w-[165px] flex-col gap-[14px] pt-[20px]">
         {rightColumn.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

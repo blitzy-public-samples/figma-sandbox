@@ -27,6 +27,14 @@ export interface Product {
   name: string;
 
   /**
+   * Optional display name override used specifically on the Shopping Bag
+   * (cart) screen. When present, the cart renders this value instead of
+   * `name`. This accounts for minor Figma text variations between screens
+   * (e.g., "PEUGEOT- LR01" on the cart vs "PEUGEOT - LR01" elsewhere).
+   */
+  cartName?: string;
+
+  /**
    * Category label describing the product type.
    * @example "Road Bike", "Mountain Bike", "Road Helmet"
    */

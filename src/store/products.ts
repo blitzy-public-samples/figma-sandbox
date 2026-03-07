@@ -26,6 +26,7 @@ export const products: Product[] = [
   {
     id: 'peugeot-lr01',
     name: 'PEUGEOT - LR01',
+    cartName: 'PEUGEOT- LR01',
     category: 'Road Bike',
     price: 1999.99,
     image: '/images/bike-peugeot-lr01.png',

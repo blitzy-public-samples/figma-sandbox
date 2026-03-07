@@ -73,11 +73,14 @@ const CartItem: React.FC<CartItemProps> = ({
 
       {/* Text Column — product name and price stacked vertically */}
       <div className="flex-1 flex flex-col ml-3">
-        {/* Product Name: Poppins 700, 15px, color-text-semi (rgba(255,255,255,0.87)) */}
+        {/* Product Name: Poppins 700, 15px, color-text-semi (rgba(255,255,255,0.87))
+            Uses cartName (if defined) for screen-specific Figma text fidelity,
+            falling back to the standard name. See AAP §0.5.1 Shopping Bag:
+            "PEUGEOT- LR01" (no space before hyphen) vs Detail "PEUGEOT - LR01". */}
         <span
           className="font-bold text-[15px] leading-[1.5em] tracking-[-0.02em] text-text-semi"
         >
-          {item.product.name}
+          {item.product.cartName ?? item.product.name}
         </span>
 
         {/* Product Price: Poppins 400, 13px, #3C9EEA with "$ " prefix */}

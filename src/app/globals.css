@@ -161,6 +161,28 @@ body {
   }
 }
 
+/* 2px variant of gradient-stroke-button for the "Add to Cart" button on the
+   Detail page BuyNowBar. The Figma reconciled spec calls for a 2px stroke
+   width on this specific button (vs the standard 1px used by BackButton and
+   other gradient buttons). Same gradient direction and color stops as
+   stroke-button (135deg, #FFF 0% → #000 100%). */
+@utility gradient-stroke-button-bold {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: var(--stroke-button);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
 @utility gradient-stroke-card {
   position: relative;
   &::before {
