@@ -39,10 +39,9 @@ export default function TotalDisplay(): React.JSX.Element {
 
   return (
     <div className="flex items-center justify-between mx-5">
-      {/* "Total:" label — left-aligned */}
+      {/* "Total:" label — left-aligned, color-text-semi token */}
       <span
-        className="font-medium text-[15px] leading-[1.5em]"
-        style={{ color: 'rgba(255,255,255,0.87)' }}
+        className="font-medium text-[15px] leading-[1.5em] text-text-semi"
       >
         Total:
       </span>

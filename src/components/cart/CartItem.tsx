@@ -73,10 +73,9 @@ const CartItem: React.FC<CartItemProps> = ({
 
       {/* Text Column — product name and price stacked vertically */}
       <div className="flex-1 flex flex-col ml-3">
-        {/* Product Name: Poppins 700, 15px, rgba(255,255,255,0.87) */}
+        {/* Product Name: Poppins 700, 15px, color-text-semi (rgba(255,255,255,0.87)) */}
         <span
-          className="font-bold text-[15px] leading-[1.5em] tracking-[-0.02em]"
-          style={{ color: 'rgba(255,255,255,0.87)' }}
+          className="font-bold text-[15px] leading-[1.5em] tracking-[-0.02em] text-text-semi"
         >
           {item.product.name}
         </span>

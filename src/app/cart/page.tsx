@@ -133,8 +133,7 @@ export default function CartPage() {
           Figma: y:516, ~24px gap below CartItemList bottom. */}
       <div className="mt-6 mx-5">
         <p
-          className="font-normal text-[15px] leading-[1.5em] tracking-[-0.02em]"
-          style={{ color: 'rgba(255,255,255,0.6)' }}
+          className="font-normal text-[15px] leading-[1.5em] tracking-[-0.02em] text-text-muted"
         >
           Your cart qualifies for free shipping
         </p>

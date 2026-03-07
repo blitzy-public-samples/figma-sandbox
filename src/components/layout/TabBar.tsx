@@ -247,8 +247,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
 
   return (
     <nav
-      className="absolute bottom-0 left-0 right-0 flex items-center justify-around"
-      style={{ height: '103px', paddingBottom: '24px', paddingTop: '16px' }}
+      className="absolute bottom-0 left-0 right-0 flex h-[103px] items-center justify-around pb-[24px] pt-[16px]"
       aria-label="Main navigation"
     >
       {TABS.map((tab, index) => {
@@ -264,28 +263,19 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
          */
         const tabInner = (
           <>
-            {/* Active tab: gradient background square */}
+            {/* Active tab: gradient background square with glow shadow */}
             {isActive && (
               <span
-                className="absolute inset-0 rounded-[10px]"
-                style={{
-                  background:
-                    'linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)',
-                  boxShadow: '0px 4px 12px rgba(52, 200, 232, 0.3)',
-                }}
+                className="absolute inset-0 rounded-[10px] bg-gradient-primary shadow-[0px_4px_12px_rgba(52,200,232,0.3)]"
                 aria-hidden="true"
               />
             )}
 
-            {/* Icon container */}
+            {/* Icon container — active: white, inactive: muted white */}
             <span
-              className="relative z-10 flex items-center justify-center"
-              style={{
-                color: isActive
-                  ? '#FFFFFF'
-                  : 'rgba(255, 255, 255, 0.4)',
-                transition: 'color 200ms ease-out',
-              }}
+              className={`relative z-10 flex items-center justify-center transition-colors duration-200 ease-out ${
+                isActive ? 'text-white' : 'text-white/40'
+              }`}
             >
               <IconComponent />
             </span>
@@ -293,20 +283,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
             {/* Cart badge: displayed when cart has items and this is the cart tab */}
             {isCartTab && cartCount > 0 && (
               <span
-                className="absolute flex items-center justify-center rounded-full"
-                style={{
-                  top: '-2px',
-                  right: '-2px',
-                  width: '16px',
-                  height: '16px',
-                  background:
-                    'linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)',
-                  fontSize: '9px',
-                  fontWeight: 700,
-                  color: '#FFFFFF',
-                  lineHeight: 1,
-                  zIndex: 20,
-                }}
+                className="absolute top-[-2px] right-[-2px] z-20 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-primary text-[9px] font-bold leading-none text-white"
                 aria-label={`${cartCount} items in cart`}
               >
                 {cartCount > 9 ? '9+' : cartCount}
@@ -323,8 +300,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
             <Link
               key={tab.name}
               href={tab.href}
-              className="relative flex flex-col items-center justify-center"
-              style={{ width: '44px', height: '44px', cursor: 'pointer', textDecoration: 'none' }}
+              className="relative flex h-[44px] w-[44px] cursor-pointer flex-col items-center justify-center no-underline"
               aria-label={tab.name}
               aria-current={isActive ? 'page' : undefined}
               onClick={() => onTabChange?.(index)}
@@ -343,8 +319,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
           >
             <button
               type="button"
-              className="relative flex flex-col items-center justify-center"
-              style={{ width: '44px', height: '44px', cursor: 'pointer' }}
+              className="relative flex h-[44px] w-[44px] cursor-pointer flex-col items-center justify-center"
               onClick={() => onTabChange?.(index)}
               aria-label={tab.name}
               aria-current={isActive ? 'page' : undefined}

@@ -65,48 +65,30 @@ function PriceSummary(): React.JSX.Element {
     <div className="mx-5 space-y-2">
       {/* Subtotal Row */}
       <div className="flex items-center justify-between">
-        <span
-          className="font-medium text-[15px] leading-[1.5em]"
-          style={{ color: 'rgba(255,255,255,0.87)' }}
-        >
+        <span className="font-medium text-[15px] leading-[1.5em] text-text-semi">
           Subtotal:
         </span>
-        <span
-          className="font-normal text-[15px] leading-[1.5em]"
-          style={{ color: 'rgba(255,255,255,0.6)' }}
-        >
+        <span className="font-normal text-[15px] leading-[1.5em] text-text-muted">
           {formattedSubtotal}
         </span>
       </div>
 
       {/* Delivery Fee Row */}
       <div className="flex items-center justify-between">
-        <span
-          className="font-medium text-[15px] leading-[1.5em]"
-          style={{ color: 'rgba(255,255,255,0.87)' }}
-        >
+        <span className="font-medium text-[15px] leading-[1.5em] text-text-semi">
           Delivery Fee:
         </span>
-        <span
-          className="font-normal text-[15px] leading-[1.5em]"
-          style={{ color: 'rgba(255,255,255,0.6)' }}
-        >
+        <span className="font-normal text-[15px] leading-[1.5em] text-text-muted">
           {formattedDeliveryFee}
         </span>
       </div>
 
       {/* Discount Row */}
       <div className="flex items-center justify-between">
-        <span
-          className="font-medium text-[15px] leading-[1.5em]"
-          style={{ color: 'rgba(255,255,255,0.87)' }}
-        >
+        <span className="font-medium text-[15px] leading-[1.5em] text-text-semi">
           Discount:
         </span>
-        <span
-          className="font-normal text-[15px] leading-[1.5em]"
-          style={{ color: 'rgba(255,255,255,0.6)' }}
-        >
+        <span className="font-normal text-[15px] leading-[1.5em] text-text-muted">
           {formattedDiscount}
         </span>
       </div>

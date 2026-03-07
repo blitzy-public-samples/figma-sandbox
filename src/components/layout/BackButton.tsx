@@ -24,8 +24,9 @@ interface BackButtonProps {
  *
  * Used by PageHeader in "back mode" on the Detail and Shopping Bag screens.
  * Implements the neumorphic raised button effect with dual box-shadow
- * (upward + downward) and a gradient stroke via a pseudo-element wrapper
- * technique (CSS border-image does not work with border-radius).
+ * (upward + downward) and a gradient stroke via the ::before pseudo-element
+ * technique (gradient-stroke-button utility, since CSS border-image does
+ * not work with border-radius).
  */
 export default function BackButton({ onClick }: BackButtonProps) {
   const router = useRouter();
@@ -39,37 +40,17 @@ export default function BackButton({ onClick }: BackButtonProps) {
     }
   };
 
+  /* Main button — gradient fill with ::before pseudo-element gradient stroke.
+     Design system classes applied:
+     - bg-gradient-primary: blue-to-purple gradient fill
+     - shadow-button: neumorphic dual-direction shadow
+     - gradient-stroke-button: ::before pseudo-element 1px gradient stroke */
   return (
-    <div
-      className="relative w-[44px] h-[44px] shrink-0 rounded-[10px]"
-      style={{
-        boxShadow:
-          '0px 20px 30px rgba(16, 20, 28, 1), 0px -20px 30px rgba(43, 52, 69, 0.5)',
-      }}
-    >
-      {/* Gradient stroke layer — 1px gradient border effect using absolute
-          positioning. Extends 1px beyond the button on all sides (inset: -1px)
-          with border-radius 11px (10px button radius + 1px stroke width).
-          Sits behind the button (z-0) to create the gradient border appearance.
-          BLITZY [LAYOUT]: Gradient stroke via wrapper div — CSS border-image
-          is incompatible with border-radius. */}
-      <div
-        className="absolute inset-[-1px] rounded-[11px]"
-        style={{
-          background: 'linear-gradient(135deg, #FFF 0%, #000 100%)',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Main button — blue-to-purple gradient fill, above stroke layer */}
       <button
         type="button"
         onClick={handleClick}
         aria-label="Go back"
-        className="relative z-10 w-full h-full rounded-[10px] flex items-center justify-center cursor-pointer border-none outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        style={{
-          background: 'linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)',
-        }}
+        className="relative w-[44px] h-[44px] shrink-0 rounded-[10px] flex items-center justify-center cursor-pointer border-none bg-gradient-primary shadow-button gradient-stroke-button outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         {/* White left-pointing chevron icon — inline SVG matching the
             Figma-exported chevron-left.svg (node 4:1395).
@@ -92,6 +73,5 @@ export default function BackButton({ onClick }: BackButtonProps) {
           />
         </svg>
       </button>
-    </div>
   );
 }

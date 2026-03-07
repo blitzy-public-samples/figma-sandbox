@@ -60,40 +60,18 @@ export default function PageHeader({
           {title}
         </h1>
 
-        {/* Search button — 44×44 gradient button with gradient stroke
-            Uses the same wrapper div technique as BackButton for the
-            gradient border (CSS border-image is incompatible with
-            border-radius). */}
-        <div
-          className="relative h-[44px] w-[44px] shrink-0 rounded-[10px]"
-          style={{
-            boxShadow:
-              '0px 20px 30px rgba(16, 20, 28, 1), 0px -20px 30px rgba(43, 52, 69, 0.5)',
-          }}
-        >
-          {/* Gradient stroke layer — 1px gradient border effect.
-              Extends 1px beyond the button on all sides (inset: -1px)
-              with border-radius 11px (10px + 1px). Sits behind the
-              button (z-0) to create the gradient border appearance.
-              BLITZY [LAYOUT]: Gradient stroke via wrapper div — CSS
-              border-image is incompatible with border-radius. */}
-          <div
-            className="absolute inset-[-1px] rounded-[11px]"
-            style={{
-              background: 'linear-gradient(135deg, #FFF 0%, #000 100%)',
-            }}
-            aria-hidden="true"
-          />
-
-          {/* Main search button — gradient fill, above stroke layer */}
+        {/* Search button — 44×44 gradient button with gradient stroke.
+            Uses ::before pseudo-element via gradient-stroke-button utility
+            for gradient border (CSS border-image is incompatible with
+            border-radius). Design system classes applied:
+            - bg-gradient-primary: blue-to-purple gradient fill
+            - shadow-button: neumorphic dual-direction shadow
+            - gradient-stroke-button: ::before pseudo-element 1px gradient stroke */}
           <button
             type="button"
             onClick={onSearch}
             aria-label="Search"
-            className="relative z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-[10px] border-none outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            style={{
-              background: 'linear-gradient(142deg, #34C8E8 0%, #4E4AF2 100%)',
-            }}
+            className="relative flex h-[44px] w-[44px] shrink-0 cursor-pointer items-center justify-center rounded-[10px] border-none bg-gradient-primary shadow-button gradient-stroke-button outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             {/* Magnifying glass search icon — inline SVG matching
                 src/assets/icons/search-icon.svg (Figma node 1:48).
@@ -129,7 +107,6 @@ export default function PageHeader({
               />
             </svg>
           </button>
-        </div>
       </header>
     );
   }
