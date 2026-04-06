@@ -2,6 +2,7 @@
   "name": "area-landing",
   "version": "0.1.0",
   "private": true,
+  "description": "Area - Responsive marketing landing page built with Next.js, TypeScript, and Tailwind CSS",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -16,6 +17,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.0.0",
     "@tailwindcss/postcss": "^4.2.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -29,5 +31,8 @@
     "tailwindcss": "^4.2.2",
     "ts-jest": "^29.3.0",
     "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=20.9"
   }
 }
