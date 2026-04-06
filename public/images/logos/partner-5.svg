@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" fill="none">
+  <!-- Placeholder partner logo 5 (Logoipsum-style) -->
+  <path d="M2 16 L12 4 L22 16 L12 28 Z" fill="#D4D4A5" stroke="#5A5C32" stroke-width="1"/>
+  <text x="28" y="22" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#5A5C32" letter-spacing="0.5">
+    Logoipsum
+  </text>
+</svg>
