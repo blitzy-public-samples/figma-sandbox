@@ -19,3 +19,4 @@ export { BigPictureSection } from './BigPictureSection';
 export { WhyChooseSection } from './WhyChooseSection';
 export { TestimonialSection } from './TestimonialSection';
 export { MapSuccessSection } from './MapSuccessSection';
+export { ConnectSection } from './ConnectSection';
