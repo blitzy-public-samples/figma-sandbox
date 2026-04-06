@@ -16,5 +16,6 @@ export { TrustedBySection } from './TrustedBySection';
 export { BenefitsSection } from './BenefitsSection';
 export { PhotoGallery } from './PhotoGallery';
 export { BigPictureSection } from './BigPictureSection';
+export { WhyChooseSection } from './WhyChooseSection';
 export { TestimonialSection } from './TestimonialSection';
 export { MapSuccessSection } from './MapSuccessSection';
