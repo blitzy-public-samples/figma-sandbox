@@ -30,8 +30,7 @@
 import { ArrowRight } from 'lucide-react';
 
 import { SITE_CONTENT } from '@/lib/constants';
-import { Button } from '@/components/ui/Button';
-import { StepCard } from '@/components/ui/StepCard';
+import { Button, StepCard } from '@/components/ui';
 
 /**
  * "Map Your Success" landing-page section.

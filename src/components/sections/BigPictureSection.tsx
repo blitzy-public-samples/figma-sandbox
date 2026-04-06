@@ -34,9 +34,7 @@ import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
 import { SITE_CONTENT } from '@/lib/constants';
-import { SectionLabel } from '@/components/ui/SectionLabel';
-import { StepCard } from '@/components/ui/StepCard';
-import { Button } from '@/components/ui/Button';
+import { SectionLabel, StepCard, Button } from '@/components/ui';
 
 /**
  * Renders the "See the Big Picture" section with numbered insight steps,
