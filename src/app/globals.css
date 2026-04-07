@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   AREA MARKETING LANDING PAGE — DESIGN TOKEN SYSTEM
+   ==========================================================================
+   Single source of truth for all design tokens used across the application.
+   Tailwind CSS v4 CSS-first configuration via @theme directive.
+
+   References:
+   - AAP §0.5.3 Color Palette — 7 brand colors from Figma Styles
+   - AAP §0.5.3 Typography Scale — Serif display + sans-serif body
+   - AAP §0.4.2 Responsive Breakpoints — Tablet 800px, Desktop 1280px
+   - AAP §0.7.4 Tailwind CSS v4 Rules — No tailwind.config.js needed
+   ========================================================================== */
+
+@theme {
+  /* =======================================================================
+     COLOR PALETTE
+     Extracted from Figma Styles section (AAP §0.5.3)
+     Generates Tailwind utilities: text-area-*, bg-area-*, border-area-*
+     ======================================================================= */
+
+  /* Primary text color and headings — near-black */
+  --color-area-black: #1A1A1A;
+
+  /* Primary brand color — olive green for buttons, accents */
+  --color-area-olive: #5A5C32;
+
+  /* Secondary text and borders — warm gray (darkened from #A8A89A for WCAG AA 4.5:1 contrast) */
+  --color-area-gray: #737366;
+
+  /* Page backgrounds and card surfaces — off-white */
+  --color-area-cream: #FAFAF5;
+
+  /* Accent backgrounds and highlight areas — pale sage */
+  --color-area-sage-light: #D4D4A5;
+
+  /* Secondary brand color and hover states — sage green (darkened from #8B8F5E for WCAG AA 4.5:1 contrast) */
+  --color-area-sage: #6B6E47;
+
+  /* Dark accents and footer backgrounds — deep olive */
+  --color-area-olive-dark: #3D4A20;
+
+  /* =======================================================================
+     TYPOGRAPHY — FONT FAMILIES
+     Connected to CSS variables set by next/font/google in layout.tsx.
+     The layout component applies --font-serif and --font-sans variables
+     via class names on the <html> element. When loaded, the optimized
+     web fonts override these fallback stacks.
+
+     Generates Tailwind utilities: font-serif, font-sans
+     ======================================================================= */
+
+  /* Serif display font for headings (DM Serif Display loaded via next/font) */
+  --font-serif: "DM Serif Display", Georgia, "Times New Roman", serif;
+
+  /* Sans-serif body font for paragraphs, labels, UI (Inter loaded via next/font) */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* =======================================================================
+     RESPONSIVE BREAKPOINTS
+     Custom breakpoints matching exact Figma design specifications.
+     Overrides Tailwind defaults (md: 768px → 800px, lg: 1024px → 1280px).
+
+     Three-breakpoint system (AAP §0.4.2):
+     - Mobile (default): 1px – 799px — no prefix
+     - Tablet (md:):     800px – 1279px
+     - Desktop (lg:):    1280px+
+
+     Generates responsive prefixes: md:*, lg:*
+     ======================================================================= */
+
+  --breakpoint-md: 800px;
+  --breakpoint-lg: 1280px;
+}
+
+/* ==========================================================================
+   BASE STYLES
+   Global style resets and enhancements applied after Tailwind's preflight.
+   ========================================================================== */
+
+/* Smooth scrolling for single-page anchor navigation (#benefits, #contact, etc.)
+   Respects user motion preferences for accessibility (WCAG 2.1 SC 2.3.3) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom focus-visible outline using the olive brand color.
+   Uses :focus-visible (not :focus) so focus rings appear only for keyboard
+   navigation, not mouse clicks — per WCAG 2.4.7 Focus Visible */
+*:focus-visible {
+  outline: 2px solid var(--color-area-olive);
+  outline-offset: 2px;
+}
+
+/* Prevent horizontal scrollbar from full-width sections that may slightly
+   overflow the viewport (e.g., hero images, gallery sections) */
+body {
+  overflow-x: hidden;
+}
