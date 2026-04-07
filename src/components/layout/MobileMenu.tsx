@@ -95,6 +95,8 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation menu"
+      aria-hidden={!isOpen}
+      inert={!isOpen ? true : undefined}
     >
       {/* Backdrop — semi-transparent overlay; click to close */}
       <div
@@ -112,7 +114,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         {/* Close button — top right corner of the panel */}
         <button
           onClick={onClose}
-          className="absolute top-4 end-4 p-2 rounded-lg hover:bg-area-sage-light/20 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-area-olive focus-visible:ring-offset-2"
+          className="absolute top-4 end-4 p-2 rounded-full border border-area-olive hover:bg-area-sage-light/20 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-area-olive focus-visible:ring-offset-2"
           aria-label="Close navigation menu"
           type="button"
         >

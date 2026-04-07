@@ -63,10 +63,11 @@ export function Navbar() {
   // Render
   // -------------------------------------------------------------------------
   return (
-    <nav
-      aria-label="Main navigation"
-      className="sticky top-0 z-50 w-full bg-area-cream/95 backdrop-blur-sm"
-    >
+    <>
+      <nav
+        aria-label="Main navigation"
+        className="sticky top-0 z-50 w-full bg-area-cream/95 backdrop-blur-sm"
+      >
       {/* Inner container — max-width centered with responsive horizontal padding */}
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         {/* Flex row: Logo | Nav Links | CTA / Hamburger */}
@@ -118,13 +119,16 @@ export function Navbar() {
           </div>
         </div>
       </div>
+      </nav>
 
       {/* ------------------------------------------------------------------
           Mobile Menu Drawer — Full-screen slide-out overlay
-          Controlled by isMenuOpen state; handles its own enter/exit animation.
-          Placed outside the inner container but inside the <nav> landmark.
+          Rendered as a sibling OUTSIDE the <nav> element to avoid the CSS
+          containing block created by backdrop-filter: blur() on the nav.
+          This ensures position: fixed; inset: 0 resolves relative to the
+          viewport rather than the 64px-tall nav bar.
           ------------------------------------------------------------------ */}
       <MobileMenu isOpen={isMenuOpen} onClose={closeMenu} />
-    </nav>
+    </>
   )
 }

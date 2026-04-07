@@ -26,8 +26,8 @@
   /* Primary brand color — olive green for buttons, accents */
   --color-area-olive: #5A5C32;
 
-  /* Secondary text and borders — warm gray */
-  --color-area-gray: #A8A89A;
+  /* Secondary text and borders — warm gray (darkened from #A8A89A for WCAG AA 4.5:1 contrast) */
+  --color-area-gray: #737366;
 
   /* Page backgrounds and card surfaces — off-white */
   --color-area-cream: #FAFAF5;
@@ -35,8 +35,8 @@
   /* Accent backgrounds and highlight areas — pale sage */
   --color-area-sage-light: #D4D4A5;
 
-  /* Secondary brand color and hover states — sage green */
-  --color-area-sage: #8B8F5E;
+  /* Secondary brand color and hover states — sage green (darkened from #8B8F5E for WCAG AA 4.5:1 contrast) */
+  --color-area-sage: #6B6E47;
 
   /* Dark accents and footer backgrounds — deep olive */
   --color-area-olive-dark: #3D4A20;
