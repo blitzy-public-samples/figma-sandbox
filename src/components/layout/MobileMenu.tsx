@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { X } from 'lucide-react'
 
@@ -53,6 +53,11 @@ interface MobileMenuProps {
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const { navLinks } = SITE_CONTENT
 
+  /** Ref for the dialog container — used by the focus trap to query focusable children */
+  const dialogRef = useRef<HTMLDivElement>(null)
+  /** Ref for the close button — receives initial focus when the drawer opens */
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+
   // -----------------------------------------------------------------------
   // Side Effect — Body scroll lock
   // -----------------------------------------------------------------------
@@ -83,10 +88,121 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   }, [isOpen, onClose])
 
   // -----------------------------------------------------------------------
+  // Side Effect — Auto-close on viewport resize past md breakpoint (800px)
+  // When the viewport exceeds the mobile breakpoint the hamburger button
+  // becomes hidden (md:hidden) but the drawer state may still be open.
+  // This listener synchronises the drawer state with the viewport size,
+  // closing the drawer and releasing the scroll lock when the desktop
+  // navbar becomes visible. Uses matchMedia for efficient change detection
+  // without polling or resize-event throttling.
+  // -----------------------------------------------------------------------
+  useEffect(() => {
+    // Guard for SSR and test environments where matchMedia is unavailable
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return
+
+    const mediaQuery = window.matchMedia('(min-width: 800px)')
+
+    /** Close the drawer whenever the viewport crosses into desktop territory */
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      if (e.matches && isOpen) {
+        onClose()
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleMediaChange)
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaChange)
+    }
+  }, [isOpen, onClose])
+
+  // -----------------------------------------------------------------------
+  // Side Effect — Set inert on background content when drawer is open
+  // When the modal drawer is open, background landmarks (<nav>, <main>,
+  // <footer>) are made non-interactive via the HTML inert attribute. This
+  // prevents screen readers from accessing background content and blocks
+  // all pointer and keyboard interaction with elements behind the overlay,
+  // fulfilling WCAG 2.1 SC 2.4.3 (Focus Order) for modal dialogs.
+  // -----------------------------------------------------------------------
+  useEffect(() => {
+    const mainEl = document.querySelector('main')
+    const footerEl = document.querySelector('footer')
+    const navEl = document.querySelector('nav[aria-label="Main navigation"]')
+
+    if (isOpen) {
+      mainEl?.setAttribute('inert', '')
+      footerEl?.setAttribute('inert', '')
+      navEl?.setAttribute('inert', '')
+    } else {
+      mainEl?.removeAttribute('inert')
+      footerEl?.removeAttribute('inert')
+      navEl?.removeAttribute('inert')
+    }
+
+    return () => {
+      // Re-query on cleanup to ensure attributes are removed even on unmount
+      document.querySelector('main')?.removeAttribute('inert')
+      document.querySelector('footer')?.removeAttribute('inert')
+      document.querySelector('nav[aria-label="Main navigation"]')?.removeAttribute('inert')
+    }
+  }, [isOpen])
+
+  // -----------------------------------------------------------------------
+  // Side Effect — Focus trap and initial focus management
+  // Traps keyboard focus within the dialog when open so Tab from the last
+  // focusable element wraps to the first (close button) and Shift+Tab from
+  // the first wraps to the last. Moves focus to the close button on open
+  // to satisfy ARIA Authoring Practices for modal dialogs.
+  // -----------------------------------------------------------------------
+  useEffect(() => {
+    if (!isOpen || !dialogRef.current) return
+
+    // Move focus to the close button after the CSS transition begins
+    const frameId = requestAnimationFrame(() => {
+      closeButtonRef.current?.focus()
+    })
+
+    const dialog = dialogRef.current
+
+    /** Intercept Tab / Shift+Tab to cycle within the dialog boundary */
+    const handleFocusTrap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return
+
+      const focusableElements = dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+      if (focusableElements.length === 0) return
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (e.shiftKey) {
+        // Shift+Tab on first element → wrap to last
+        if (document.activeElement === firstElement) {
+          e.preventDefault()
+          lastElement.focus()
+        }
+      } else {
+        // Tab on last element → wrap to first
+        if (document.activeElement === lastElement) {
+          e.preventDefault()
+          firstElement.focus()
+        }
+      }
+    }
+
+    dialog.addEventListener('keydown', handleFocusTrap)
+    return () => {
+      cancelAnimationFrame(frameId)
+      dialog.removeEventListener('keydown', handleFocusTrap)
+    }
+  }, [isOpen])
+
+  // -----------------------------------------------------------------------
   // Render
   // -----------------------------------------------------------------------
   return (
     <div
+      ref={dialogRef}
       className={`fixed inset-0 z-50 transition-opacity duration-300 ${
         isOpen
           ? 'opacity-100 pointer-events-auto'
@@ -113,6 +229,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       >
         {/* Close button — top right corner of the panel */}
         <button
+          ref={closeButtonRef}
           onClick={onClose}
           className="absolute top-4 end-4 p-2 rounded-full border border-area-olive hover:bg-area-sage-light/20 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-area-olive focus-visible:ring-offset-2"
           aria-label="Close navigation menu"

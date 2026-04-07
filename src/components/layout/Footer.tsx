@@ -78,7 +78,7 @@ export function Footer() {
           </nav>
 
           {/* ----- Copyright text (right on tablet+) ----- */}
-          <p className="text-xs text-area-cream/60">{copyright}</p>
+          <p className="text-xs text-area-cream/70">{copyright}</p>
         </div>
       </div>
     </footer>
