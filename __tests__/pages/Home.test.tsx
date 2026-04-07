@@ -44,7 +44,6 @@ import Home from '@/app/page'
  * `unoptimized`) to prevent React warnings about non-boolean DOM attrs.
  */
 jest.mock('next/image', () => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const ReactModule = require('react')
   return {
     __esModule: true,
@@ -82,7 +81,6 @@ jest.mock('next/image', () => {
  * HTML attributes so link queries and navigation assertions work.
  */
 jest.mock('next/link', () => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const ReactModule = require('react')
   return {
     __esModule: true,

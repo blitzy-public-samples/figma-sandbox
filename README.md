@@ -122,7 +122,7 @@ The type system uses a serif display font for headings and a sans-serif font for
 
 ### Icons
 
-Icons are sourced from [lucide-react](https://lucide.dev/) and mapped to the Figma icon set, including: Settings, Check, X, TrendingUp, LayoutGrid, Eye, Building, MapPin, Menu, ArrowRight, and ChevronRight.
+Icons are sourced from [lucide-react](https://lucide.dev/) and mapped to the Figma icon set, including: ArrowRight, Building, Check, Eye, LayoutGrid, Menu, TrendingUp, and X.
 
 ---
 
